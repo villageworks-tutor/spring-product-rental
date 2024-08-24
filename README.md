@@ -13,5 +13,5 @@ Springフレームワークサンプル：製品貸出管理アプリケーシ�
   3. eclipseから展開したプロジェクトをインポートします。
   4. インポートするとeclipseがブルドを開始します。
   5. ビルド終了後にBootダッシュボードからインポートしたプロジェクトを起動します。
-  6. ブラウザから「http://localhost:8080/products」にアクセスしてください。
+  6. ブラウザから「[http://localhost:8080/products](http://localhost:8080/products)」にアクセスしてください。
 
