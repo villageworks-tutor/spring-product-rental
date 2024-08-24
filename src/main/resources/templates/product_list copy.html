@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>製品貸出管理アプリ</title>
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+	<h1>製品貸出管理アプリ</h1>
+	
+	<table border="1">
+		<thead>
+			<tr>
+				<th rowspan="2">製品番号</th>
+				<th rowspan="2">製品名</th>
+				<!--/*
+				<th>Description・製品詳細</th>
+				*/-->
+				<th rowspan="2">貸出状態</th>
+				<th colspan="2" rowspan="2">処理</th>
+				<th colspan="4">第1日目</th>
+				<th colspan="4">第2日目</th>
+			</tr>
+			<tr>
+				<th>1st</th>
+				<th>2nd</th>
+				<th>3rd</th>
+				<th>4th</th>
+				<th>1st</th>
+				<th>2nd</th>
+				<th>3rd</th>
+				<th>4th</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="product : ${products}">
+				<td th:text="${product.productNo}"></td>
+				<td th:text="${product.name}"></td>
+				<!--/* <td th:text="${product.description}"></td> */-->
+				<td th:text="${product.available ? 'Yes' : 'No'}"></td>
+				<td>
+					<form th:action="@{/api/rentals/rent}" method="post">
+						<input type="hidden" name="productId" th:value="${product.id}">
+						<input type="hidden" name="userId" value="1">
+						<button type="submit" th:disabled="${!product.available}">Rent</button>
+						<!--/* <button type="submit" th:disabled="${!product.available}">Rent</button> */-->
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/api/rentals/return}" method="post">
+						<input type="hidden" name="productId" th:value="${product.id}">
+						<input type="hidden" name="userId" th:value="1">
+						<button type="submit" th:disabled="${product.available}">Return</button>
+					</form>
+				</td>
+				<td><label>◯</label></td>
+				<td><label>◯</label></td>
+				<td><label>◯</label></td>
+				<td><label>◯</label></td>
+				<td><label>◯</label></td>
+				<td><label>◯</label></td>
+				<td><label>◯</label></td>
+				<td><label>◯</label></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
