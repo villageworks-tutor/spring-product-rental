@@ -22,6 +22,11 @@ public class RentalController {
     @Autowired
     private RentalService rentalService;
 
+    /**
+     * 製品一覧表示
+     * @param model スコープ
+     * @return 遷移先Thymeleafテンプレート名
+     */
     @GetMapping("/products")
     public String showProductList(Model model) {
         List<Product> products = productService.findAllByOrderIdAsc();
@@ -29,12 +34,24 @@ public class RentalController {
         return "product_list";
     }
     
+    /**
+     * 製品貸出処理
+     * @param productId 製品通番
+     * @param userId    ユーザID
+     * @return 遷移先Thymeleafテンプレート名
+     */
     @PostMapping("/api/rentals/rent")
     public String rentProduct(@RequestParam Long productId, @RequestParam Long userId) {
         rentalService.rentProduct(productId, userId);
         return "redirect:/products";
     }
 
+    /**
+     * 製品返却処理
+     * @param productId 製品通番
+     * @param userId    ユーザID
+     * @return 遷移先Thymeleafテンプレート名
+     */
     @PostMapping("/api/rentals/return")
     public String returnProduct(@RequestParam Long productId, Model model) {
         boolean isReturned = rentalService.returnProduct(productId);
