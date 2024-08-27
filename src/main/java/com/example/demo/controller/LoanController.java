@@ -9,30 +9,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.entity.Product;
-import com.example.demo.service.ProductService;
-import com.example.demo.service.RentalService;
+import com.example.demo.controller.formbean.LoanFormBean;
+import com.example.demo.service.LoanService;
 
 @Controller
-public class RentalController {
+public class LoanController {
 	
     @Autowired
-    private ProductService productService;
+    private LoanService loanService;
 
-    @Autowired
-    private RentalService rentalService;
-
-    /**
-     * 製品一覧表示
-     * @param model スコープ
-     * @return 遷移先Thymeleafテンプレート名
-     */
-    @GetMapping("/products")
-    public String showProductList(Model model) {
-        List<Product> products = productService.findAllByOrderIdAsc();
-        model.addAttribute("products", products);
-        return "product_list";
-    }
+	/**
+	 * 貸出状況一覧表示
+	 * @param model スコープ
+	 * @return 遷移先Thymeleafテンプレート名
+	 */
+	@GetMapping("/rentals")
+	public String showLoanList(Model model) {
+		List<LoanFormBean> list = loanService.findAllForDisplay();
+		model.addAttribute("loans", list);
+		return "list";
+	}
     
     /**
      * 製品貸出処理
@@ -42,8 +38,7 @@ public class RentalController {
      */
     @PostMapping("/api/rentals/rent")
     public String rentProduct(@RequestParam Long productId, @RequestParam Long userId) {
-        rentalService.rentProduct(productId, userId);
-        return "redirect:/products";
+        return "redirect:/rentals";
     }
 
     /**
@@ -54,8 +49,8 @@ public class RentalController {
      */
     @PostMapping("/api/rentals/return")
     public String returnProduct(@RequestParam Long productId, Model model) {
-        boolean isReturned = rentalService.returnProduct(productId);
-        model.addAttribute("isReturned", isReturned);
+        // boolean isReturned = rentalService.returnProduct(productId);
+        // model.addAttribute("isReturned", isReturned);
         return "redirect:/products";
     }
 

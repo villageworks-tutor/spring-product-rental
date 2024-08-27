@@ -1,47 +1,45 @@
-DROP TABLE IF EXISTS loans CASCADE;
-DROP TABLE IF EXISTS products CASCADE;
-DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS loans;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS users;
 
 /**********************************/
-/* ãƒ†ãƒ¼ãƒ–ãƒ«å: åˆ©ç”¨è€…ãƒã‚¹ã‚¿ */
+/* ƒe[ƒuƒ‹–¼: —˜—pÒƒ}ƒXƒ^ */
 /**********************************/
 CREATE TABLE users(
-	id SERIAL,
-	name VARCHAR(100) NOT NULL,
-	phone VARCHAR(15),
-	email VARCHAR(255)
+		id INTEGER NOT NULL,
+		name VARCHAR(100) NOT NULL,
+		phone VARCHAR(15),
+		email VARCHAR(255)
 );
 
 /**********************************/
-/* ãƒ†ãƒ¼ãƒ–ãƒ«å: è£½å“ãƒã‚¹ã‚¿ */
+/* ƒe[ƒuƒ‹–¼: »•iƒ}ƒXƒ^ */
 /**********************************/
 CREATE TABLE products(
-	id SERIAL,
-	imei CHARACTER(15) NOT NULL,
-	serial_no INTEGER NOT NULL
+		id SERIAL,
+		imei CHARACTER(15) NOT NULL,
+		serial_no INTEGER NOT NULL
 );
 
 /**********************************/
-/* ãƒ†ãƒ¼ãƒ–ãƒ«å: è²¸å‡ºç®¡ç†å°å¸³ */
+/* ƒe[ƒuƒ‹–¼: ‘İoŠÇ—‘ä’  */
 /**********************************/
 CREATE TABLE loans(
-	id SERIAL,
-	product_serial INTEGER NOT NULL,
-	user_id INTEGER NOT NULL,
-	lend_date DATE,
-	return_date DATE
+		id SERIAL,
+		product_serial INTEGER NOT NULL,
+		user_id INTEGER NOT NULL,
+		lend_date DATE NOT NULL,
+		return_date DATE
 );
 
--- åˆ©ç”¨è€…ãƒã‚¹ã‚¿ã®åˆ¶ç´„è¨­å®š
+
 ALTER TABLE users ADD CONSTRAINT IDX_users_PK PRIMARY KEY (id);
 ALTER TABLE users ADD CONSTRAINT IDX_users UNIQUE (phone, email);
 
--- è£½å“ãƒã‚¹ã‚¿ã®åˆ¶ç´„è¨­å®š
 ALTER TABLE products ADD CONSTRAINT IDX_products_PK PRIMARY KEY (id);
 ALTER TABLE products ADD CONSTRAINT IDX_products_imei UNIQUE (imei);
 ALTER TABLE products ADD CONSTRAINT IDX_products_serial UNIQUE (serial_no);
 
--- è²¸å‡ºç®¡ç†å°å¸³ãƒ†ãƒ¼ãƒ–ãƒ«ã®åˆ¶ç´„è¨­å®š
 ALTER TABLE loans ADD CONSTRAINT IDX_loan_PK PRIMARY KEY (id);
 ALTER TABLE loans ADD CONSTRAINT IDX_loan_FK_user FOREIGN KEY (user_id) REFERENCES users (id);
 ALTER TABLE loans ADD CONSTRAINT IDX_loan_FK_product FOREIGN KEY (product_serial) REFERENCES products (serial_no);
