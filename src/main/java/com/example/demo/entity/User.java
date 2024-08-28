@@ -11,13 +11,13 @@ import lombok.Data;
 @Table(name = "users")
 @Data
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    private String username;
-    
-    private String email;
-
-    // Getters and Setters
+	/**
+	 * フィールド
+	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;       // 利用者ID
+	private String name;  // 利用者名
+	private String phone; // 連絡先電話番号
+	private String email; // 連絡先メールアドレス
 }

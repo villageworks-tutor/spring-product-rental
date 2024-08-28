@@ -12,16 +12,13 @@ import lombok.Data;
 @Table(name = "products")
 @Data
 public class Product {
+	/**
+	 * フィールド
+	 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "product_no")
-    private String productNo;
-    private String name;
-    
-    private String description;
-    
-    private boolean available;
-
-    // Getters and Setters
+    private int id;       // 管理ID
+    private String  imei; // IMEIコード
+    @Column(name = "serial_no")
+    private int serialNo; // 管理番号
 }
