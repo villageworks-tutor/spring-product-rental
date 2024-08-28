@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>製品貸出管理アプリ</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<header>
+		<h1>製品貸出管理アプリ</h1>
+		<ol>
+			<li><a th:href="@{/product/list}">製品マスタ</a></li>
+			<li><a href="">利用者管理</a></li>
+		</ol>
+	</header>
+	<main>
+		<article>
+			<table border="0">
+				<caption>製品貸出一覧</caption>
+				<thead>
+					<tr>
+						<th>貸出番号</th>
+						<th>利用者名</th>
+						<th>利用状況</th>
+						<th colspan="2">処理</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="loan : ${loans}">
+						<td th:text="${loan.productSerial}"></td>
+						<td th:text="${loan.userName}"></td>
+						<td th:text="${loan.available ? '貸出可' : '貸出中'}"></td>
+						<td>
+							<form th:action="@{/api/rentals/rent}" method="post">
+								<input type="hidden" name="id" th:value="${loan.id}" />
+								<input type="hidden" name="productSerial" th:value="${loan.productSerial}" />
+								<input type="hidden" name="userId" th:value="${loan.userId}" />
+								<button type="submit" th:disabled="${!loan.available}">Rent</button>
+							</form>
+						</td>
+						<td>
+							<form th:action="@{/api/rentals/return}" method="post">
+								<input type="hidden" name="id" th:value="${loan.id}" />
+								<input type="hidden" name="productSerial" th:value="${loan.productSerial}" />
+								<input type="hidden" name="userId" th:value="${loan.userId}" />
+								<input type="hidden" name="lendDate" th:value="${loan.lendDate}" />
+								<button type="submit" th:disabled="${loan.available}">Return</button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</article>
+	</main>
+	<footer>
+		<div id="copyright">&copy; 2024 Crab Bean Band.</div>
+	</footer>
+</body>
+</html>

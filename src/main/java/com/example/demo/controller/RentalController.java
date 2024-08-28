@@ -29,7 +29,7 @@ public class RentalController {
 	public String showLoanList(Model model) {
 		List<RentalFormBean> list = rentalService.findAllForDisplay();
 		model.addAttribute("loans", list);
-		return "list";
+		return "rental/list";
 	}
 	
 	/**

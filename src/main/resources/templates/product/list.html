@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>製品マスタ</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<style>
+		#product table {
+			width: 255px;
+		}
+		.error {
+			color: tomato;
+			list-style-type: disc;
+			margin: 0;
+			padding: 0;
+		}
+		.error li {
+			margin: 0;
+			padding: 0;
+			margin-left: 20px;
+		}
+		.input {
+			width: fit-content;
+		}
+		.input input::placeholder {
+			font-size: small;
+		}
+		.input input[type="number"] {
+			width: 73px;
+		}
+		.input input[type="text"] {
+			width: 113px;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>製品貸出管理アプリ</h1>
+		<ol>
+			<li><a href="/rentals">貸出状況一覧</a></li>
+			<li><a href="">利用者管理</a></li>
+		</ol>
+	</header>
+	<main id="product">
+		<article>
+			<th:block th:if="${errorList}">
+			<ul class="error">
+				<li th:each="error : ${errorList}" th:text="${error}"></li>
+			</ul>
+			</th:block>
+			<th:block th:if="${products}">
+				<table>
+					<caption>製品マスタ</caption>
+					<thead>
+						<tr>
+							<th>管理番号</th>
+							<th>IMEI</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="product : ${products}">
+							<td th:text="${product.serialNo}"></td>
+							<td th:text="${product.imei}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</th:block>
+			<form class="form" action="/product/add" method="post">
+				<div class="input">
+					<input type="number" name="serialNo" placeholder="管理番号"
+					       th:value="${product != null ? product.serialNo : ''}" />
+					<input type="text" name="imei" placeholder="IMEI" maxlength="15"
+					       th:value="${product != null ? product.imei : ''}" />
+					<button>登録</button>
+				</div>
+			</form>
+		</article>
+	</main>
+	<footer>
+		<div id="copyright">&copy; 2024 Crab Bean Band.</div>
+	</footer>
+</body>
+</html>
