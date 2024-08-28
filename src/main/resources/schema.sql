@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS loans CASCADE;
+DROP TABLE IF EXISTS rentals CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
@@ -24,7 +24,7 @@ CREATE TABLE products(
 /**********************************/
 /* テーブル名: 貸出管理台帳 */
 /**********************************/
-CREATE TABLE loans(
+CREATE TABLE rentals(
 	id SERIAL,
 	product_serial INTEGER NOT NULL,
 	user_id INTEGER NOT NULL,
@@ -42,7 +42,7 @@ ALTER TABLE products ADD CONSTRAINT IDX_products_imei UNIQUE (imei);
 ALTER TABLE products ADD CONSTRAINT IDX_products_serial UNIQUE (serial_no);
 
 -- 貸出管理台帳テーブルの制約設定
-ALTER TABLE loans ADD CONSTRAINT IDX_loan_PK PRIMARY KEY (id);
-ALTER TABLE loans ADD CONSTRAINT IDX_loan_FK_user FOREIGN KEY (user_id) REFERENCES users (id);
-ALTER TABLE loans ADD CONSTRAINT IDX_loan_FK_product FOREIGN KEY (product_serial) REFERENCES products (serial_no);
+ALTER TABLE rentals ADD CONSTRAINT IDX_rentals_PK PRIMARY KEY (id);
+ALTER TABLE rentals ADD CONSTRAINT IDX_rentals_FK_user FOREIGN KEY (user_id) REFERENCES users (id);
+ALTER TABLE rentals ADD CONSTRAINT IDX_rentals_FK_product FOREIGN KEY (product_serial) REFERENCES products (serial_no);
 
