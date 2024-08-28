@@ -46,15 +46,18 @@
 				<td th:text="${loan.available ? '貸出可' : '貸出中'}"></td>
 				<td>
 					<form th:action="@{/api/rentals/rent}" method="post">
-						<input type="hidden" name="productSerial" th:value="${loan.productSerial}">
-						<input type="hidden" name="userId" th:value="${loan.userId}">
+						<input type="hidden" name="id" th:value="${loan.id}" />
+						<input type="hidden" name="productSerial" th:value="${loan.productSerial}" />
+						<input type="hidden" name="userId" th:value="${loan.userId}" />
 						<button type="submit" th:disabled="${!loan.available}">Rent</button>
 					</form>
 				</td>
 				<td>
 					<form th:action="@{/api/rentals/return}" method="post">
-						<input type="hidden" name="productSerial" th:value="${loan.productSerial}">
-						<input type="hidden" name="userId" th:value="${loan.userId}">
+						<input type="hidden" name="id" th:value="${loan.id}" />
+						<input type="hidden" name="productSerial" th:value="${loan.productSerial}" />
+						<input type="hidden" name="userId" th:value="${loan.userId}" />
+						<input type="hidden" name="lendDate" th:value="${loan.lendDate}" />
 						<button type="submit" th:disabled="${loan.available}">Return</button>
 					</form>
 				</td>

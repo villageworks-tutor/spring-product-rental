@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoanFormBean {
+public class RentalFormBean {
 	/**
 	 * フィールド
 	 */
@@ -31,7 +31,7 @@ public class LoanFormBean {
 	 * @param lendDate      貸出日
 	 * @param returnDate    返却日
 	 */
-	public LoanFormBean(
+	public RentalFormBean(
 			int id, 
 			int productSerial, 
 			int userId, 
