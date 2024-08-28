@@ -9,11 +9,6 @@ INSERT INTO products (imei, serial_no) VALUES ('000000000000002', 2);
 INSERT INTO products (imei, serial_no) VALUES ('000000000000003', 3);
 
 -- Insert initial rental records (assuming some products have already been rented)
-INSERT INTO loans (product_serial, user_id) VALUES (1, 1);
-INSERT INTO loans (product_serial, user_id, lend_date) VALUES (2, 2, '2024-08-20');
-INSERT INTO loans (product_serial, user_id, lend_date, return_date) VALUES (3, 3, '2024-08-21', '2024-08-22');
-/*
-INSERT INTO loans (product_serial, user_id, lend_date, return_date) VALUES (1, 1, '2024-08-20', '2024-08-20');
-INSERT INTO loans (product_serial, user_id, lend_date, return_date) VALUES (2, 2, '2024-08-21', '2024-08-22');
-INSERT INTO loans (product_serial, user_id, lend_date, return_date) VALUES (3, 1, '2024-08-22', NULL);
-*/
+INSERT INTO rentals (product_serial, user_id) VALUES (1, 1);
+INSERT INTO rentals (product_serial, user_id, lend_date) VALUES (2, 2, '2024-08-20');
+INSERT INTO rentals (product_serial, user_id, lend_date, return_date) VALUES (3, 3, '2024-08-21', '2024-08-22');
