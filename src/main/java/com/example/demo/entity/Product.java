@@ -7,10 +7,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "products")
 @Data
+@NoArgsConstructor
 public class Product {
 	/**
 	 * フィールド
@@ -21,4 +23,17 @@ public class Product {
     private String  imei; // IMEIコード
     @Column(name = "serial_no")
     private int serialNo; // 管理番号
+    
+    /**
+     * コンストラクタ
+     * @param imei     IMEIコード
+     * @param serialNo 管理番号
+     */
+	public Product(String imei, int serialNo) {
+		this.imei = imei;
+		this.serialNo = serialNo;
+	}
+    
+    
+    
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.controller.formbean.RentalFormBean;
@@ -15,6 +16,7 @@ import com.example.demo.entity.Rental;
 import com.example.demo.service.RentalService;
 
 @Controller
+@RequestMapping("/rentals")
 public class RentalController {
 	
 	@Autowired
@@ -25,11 +27,11 @@ public class RentalController {
 	 * @param model スコープ
 	 * @return 遷移先Thymeleafテンプレート名
 	 */
-	@GetMapping("/rentals")
+	@GetMapping("") // @RequestMappingを宣言しているので「/rentals」というパターンに対応するGetMappingは空文字列で指定することが正しい
 	public String showLoanList(Model model) {
 		List<RentalFormBean> list = rentalService.findAllForDisplay();
-		model.addAttribute("loans", list);
-		return "list";
+		model.addAttribute("rentals", list);
+		return "rental/list";
 	}
 	
 	/**
@@ -38,7 +40,7 @@ public class RentalController {
 	 * @param userId	ユーザID
 	 * @return 遷移先Thymeleafテンプレート名
 	 */
-	@PostMapping("/api/rentals/rent")
+	@PostMapping("/rent")
 	public String rentProduct(
 				@RequestParam("id") int id,
 				@RequestParam("productSerial") int productSerial, 
@@ -62,7 +64,7 @@ public class RentalController {
 	 * @param userId	ユーザID
 	 * @return 遷移先Thymeleafテンプレート名
 	 */
-	@PostMapping("/api/rentals/return")
+	@PostMapping("/return")
 	public String returnProduct(
 			@RequestParam("id") int id,
 			@RequestParam("productSerial") int productSerial, 
