@@ -26,25 +26,25 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="loan : ${loans}">
-						<td th:text="${loan.productSerial}"></td>
-						<td th:text="${loan.userName}"></td>
-						<td th:text="${loan.available ? '貸出可' : '貸出中'}"></td>
+					<tr th:each="rental : ${rentals}">
+						<td th:text="${rental.productSerial}"></td>
+						<td th:text="${rental.userName}"></td>
+						<td th:text="${rental.available ? '貸出可' : '貸出中'}"></td>
 						<td>
-							<form th:action="@{/api/rentals/rent}" method="post">
-								<input type="hidden" name="id" th:value="${loan.id}" />
-								<input type="hidden" name="productSerial" th:value="${loan.productSerial}" />
-								<input type="hidden" name="userId" th:value="${loan.userId}" />
-								<button type="submit" th:disabled="${!loan.available}">Rent</button>
+							<form th:action="@{/rentals/rent}" method="post">
+								<input type="hidden" name="id" th:value="${rental.id}" />
+								<input type="hidden" name="productSerial" th:value="${rental.productSerial}" />
+								<input type="hidden" name="userId" th:value="${rental.userId}" />
+								<button type="submit" th:disabled="${!rental.available}">Rent</button>
 							</form>
 						</td>
 						<td>
-							<form th:action="@{/api/rentals/return}" method="post">
-								<input type="hidden" name="id" th:value="${loan.id}" />
-								<input type="hidden" name="productSerial" th:value="${loan.productSerial}" />
-								<input type="hidden" name="userId" th:value="${loan.userId}" />
-								<input type="hidden" name="lendDate" th:value="${loan.lendDate}" />
-								<button type="submit" th:disabled="${loan.available}">Return</button>
+							<form th:action="@{/rentals/return}" method="post">
+								<input type="hidden" name="id" th:value="${rental.id}" />
+								<input type="hidden" name="productSerial" th:value="${rental.productSerial}" />
+								<input type="hidden" name="userId" th:value="${rental.userId}" />
+								<input type="hidden" name="lendDate" th:value="${rental.lendDate}" />
+								<button type="submit" th:disabled="${rental.available}">Return</button>
 							</form>
 						</td>
 					</tr>
