@@ -22,6 +22,14 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
+	@GetMapping("/{id}/delete")
+	public String delete(@PathVariable(name = "id") int id) {
+		// 削除処理の実行
+		userService.delete(id);
+		// 画面遷移：/ure/listにリダイレクト
+		return "redirect:/user/list";
+	}
+	
 	@PostMapping("/{id}/edit")
 	public String update(
 				@PathVariable(name = "id") int id,
@@ -41,7 +49,9 @@ public class UserController {
 			model.addAttribute("users", userService.findAll());
 			return "user/list";
 		}
+		// 更新処理の実行
 		userService.store(user);
+		// 画面遷移：/user/listにリダイレクト
 		return "redirect:/user/list";
 	}
 	

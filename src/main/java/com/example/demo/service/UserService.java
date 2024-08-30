@@ -57,4 +57,12 @@ public class UserService {
 		return null;
 	}
 
+	/**
+	 * 指定された利用者IDの利用者を削除する
+	 * @param id 削除対象利用者の利用者ID
+	 */
+	public void delete(int id) {
+		userRepository.deleteById(id);
+	}
+
 }
