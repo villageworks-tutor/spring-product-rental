@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>利用者スタ</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<style>
+		#user table td {
+			padding: 0 0.5rem;
+			text-align: left;
+		}
+		#user table td:first-child {
+			text-align: center;
+		}
+		.error {
+			color: tomato;
+			list-style-type: disc;
+			margin: 0;
+			padding: 0;
+		}
+		.error li {
+			margin: 0;
+			padding: 0;
+			margin-left: 20px;
+		}
+		.input {
+			margin: 0.75rem 0;
+		}
+
+		.input input::placeholder {
+			color: gainsboro;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>製品貸出管理アプリ</h1>
+		<ol>
+			<li><a th:href="@{/rentals}">貸出状況一覧</a></li>
+			<li><a th:href="@{/product/list}">製品マスタ</a></li>
+		</ol>
+	</header>
+
+	<main id="user">
+		<article>
+			<th:block th:if="${errorList}">
+			<ul class="error">
+				<li th:each="error : ${errorList}" th:text="${error}"></li>
+			</ul>
+			</th:block>
+			<table>
+				<caption>利用者管理</caption>
+				<thead>
+					<tr>
+						<th>利用者ID</th>
+						<th>利用者名</th>
+						<th>連絡先電話番号</th>
+						<th>連絡先メールアドレス</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody th:if="${users}">
+					<tr th:each="user : ${users}">
+						<td th:text="${user.id}"></td>
+						<td th:text="${user.name}"></td>
+						<td th:text="${user.phone}"></td>
+						<td th:text="${user.email}"></td>
+						<td>
+							<a th:href="@{/user/{id}/edit(id=${user.id})}">更新</a>
+							<a th:href="@{/user/{id}/delete(id=${user.id})}">削除</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<form class="form_user" action="/user/add" method="post">
+				<div class="input">
+					<label>利用者名</label>
+					<input type="text" name="name" placeholder="利用者名"
+					      th:value="${user.name}" />
+				</div>
+				<div class="input">
+					<label>電話番号</label>
+					<input type="tel" name="phone" placeholder="連絡先電話番号"
+					       th:value="${user.phone}" />
+				</div>
+				<div class="input">
+					<label>メール　</label>
+					<input type="email" name="email" placeholder="連絡先メールアドレス"
+					       th:value="${user.email}" />
+				</div>
+				<button th:unless="${buttonText}">利用者追加</button>
+				<th:block th:if="${buttonText}">
+					<button th:formaction="${'/user/' + user.id + '/edit'}" th:text="${buttonText}" formmethod="post"></button>
+					<button formaction="/user/list" formmethod="get">キャンセル</a>
+				</th:block> 
+			</form>
+		</article>
+	</main>
+
+	<footer>
+		<div id="copyright">&copy; 2024 Crab Bean Band.</div>
+	</footer>
+</body>
+</html>

@@ -23,6 +23,7 @@
 			width: fit-content;
 		}
 		.input input::placeholder {
+			color: gainsboro;
 			font-size: small;
 		}
 		.input input[type="number"] {
@@ -37,8 +38,8 @@
 	<header>
 		<h1>製品貸出管理アプリ</h1>
 		<ol>
-			<li><a href="/rentals">貸出状況一覧</a></li>
-			<li><a href="">利用者管理</a></li>
+			<li><a th:href="@{/rentals}">貸出状況一覧</a></li>
+			<li><a th:href="@{/user/list}">利用者管理</a></li>
 		</ol>
 	</header>
 	<main id="product">
