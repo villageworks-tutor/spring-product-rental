@@ -19,17 +19,17 @@ public class Product {
 	 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;       // 管理ID
+    private Integer id;       // 管理ID
     private String  imei; // IMEIコード
     @Column(name = "serial_no")
-    private int serialNo; // 管理番号
+    private Integer serialNo; // 管理番号
     
     /**
      * コンストラクタ
      * @param imei     IMEIコード
      * @param serialNo 管理番号
      */
-	public Product(String imei, int serialNo) {
+	public Product(String imei, Integer serialNo) {
 		this.imei = imei;
 		this.serialNo = serialNo;
 	}

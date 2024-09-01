@@ -35,7 +35,7 @@
 								<input type="hidden" name="id" th:value="${rental.id}" />
 								<input type="hidden" name="productSerial" th:value="${rental.productSerial}" />
 								<input type="hidden" name="userId" th:value="${rental.userId}" />
-								<button type="submit" th:disabled="${!rental.available}">Rent</button>
+								<button type="submit" th:disabled="${!rental.available}">貸出</button>
 							</form>
 						</td>
 						<td>
@@ -44,12 +44,29 @@
 								<input type="hidden" name="productSerial" th:value="${rental.productSerial}" />
 								<input type="hidden" name="userId" th:value="${rental.userId}" />
 								<input type="hidden" name="lendDate" th:value="${rental.lendDate}" />
-								<button type="submit" th:disabled="${rental.available}">Return</button>
+								<button type="submit" th:disabled="${rental.available}">返却</button>
 							</form>
 						</td>
 					</tr>
 				</tbody>
 			</table>
+			<th:block th:if="${productSerial != null and userId == nul}">
+				<form>
+					<div>
+						<label>製品管理番号：</label>
+						<span th:text="${productSerial}"></span>
+					</div>
+					<div>
+						<lable>利用者：</lable>
+						<select name="userId">
+							<option th:each="user : ${userList}" th:text="${user.name}" th:value="${user.id}"></option>
+						</select>
+						<input type="hidden" name="id" th:value="${id}" />
+						<input type="hidden" name="productSerial" th:value="${productSerial}" />
+						<button th:formaction="@{/rentals/rent}" formmethod="post">貸出</button>
+					</div>
+				</form>
+			</th:block>
 		</article>
 	</main>
 	<footer>

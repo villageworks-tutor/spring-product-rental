@@ -32,7 +32,7 @@ public class UserController {
 	
 	@PostMapping("/{id}/edit")
 	public String update(
-				@PathVariable(name = "id") int id,
+				@PathVariable(name = "id") Integer id,
 				@RequestParam(name = "name", defaultValue = "") String name,
 				@RequestParam(name = "phone", defaultValue = "") String phone,
 				@RequestParam(name = "email", defaultValue = "") String email,

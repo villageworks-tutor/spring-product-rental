@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.controller.formbean.RentalFormBean;
 import com.example.demo.entity.Rental;
+import com.example.demo.entity.User;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.RentalService;
 
 @Controller
@@ -21,6 +23,9 @@ public class RentalController {
 	
 	@Autowired
 	private RentalService rentalService;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	/**
 	 * 貸出状況一覧表示
@@ -42,9 +47,10 @@ public class RentalController {
 	 */
 	@PostMapping("/rent")
 	public String rentProduct(
-				@RequestParam("id") int id,
-				@RequestParam("productSerial") int productSerial, 
-				@RequestParam("userId") int userId
+				@RequestParam("id") Integer id,
+				@RequestParam("productSerial") Integer productSerial, 
+				@RequestParam(name = "userId", defaultValue = "") Integer userId,
+				Model model
 			) {
 		// リクエストパラメータをもとに貸出インスタンスを生成：Loanクラスにbuilderパターンを起用
 		Rental rental = Rental.builder()
@@ -53,6 +59,20 @@ public class RentalController {
 							  .productSerial(productSerial)
 							  .userId(userId)
 							  .build();
+		// 利用者IDが未入力の場合
+		if (userId == null) {
+			// 台帳IDと選択された製品管理番号をスコープに登錄
+			model.addAttribute("id", id);
+			model.addAttribute("productSerial", productSerial);
+			// 貸出状況リストを取得
+			List<RentalFormBean> list = rentalService.findAllForDisplay();
+			model.addAttribute("rentals", list);
+			// 利用者洗濯用利用者リストを取得
+			List<User> userList = userRepository.findAllByOrderById();
+			model.addAttribute("userList", userList);
+			// 画面遷移
+			return "rental/list";
+		}
 		// 貸出処理の実行
 		rentalService.execute(rental);
 		return "redirect:/rentals";
@@ -66,9 +86,9 @@ public class RentalController {
 	 */
 	@PostMapping("/return")
 	public String returnProduct(
-			@RequestParam("id") int id,
-			@RequestParam("productSerial") int productSerial, 
-			@RequestParam("userId") int userId,
+			@RequestParam("id") Integer id,
+			@RequestParam("productSerial") Integer productSerial, 
+			@RequestParam("userId") Integer userId,
 			@RequestParam("lendDate") LocalDate lendDate
 		) {
 		// リクエストパラメータをもとに貸出インスタンスを生成：Loanクラスにbuilderパターンを起用

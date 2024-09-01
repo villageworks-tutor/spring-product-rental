@@ -1,11 +1,24 @@
 SELECT
-  loans.id,
-  loans.product_serial,
-  loans.user_id,
+  rentals.id,
+  rentals.product_serial,
+  rentals.user_id,
   users.name,
-  loans.lend_date,
-  loans.return_date
+  rentals.lend_date,
+  rentals.return_date
 FROM
-  loans
-  JOIN users
-  ON users.id = loans.user_id;
+  rentals
+  LEFT JOIN users
+  ON users.id = rentals.user_id;
+
+/*
+SELECT 
+  new com.example.demo.controller.formbean.RentalFormBean(
+    rental.id, 
+    rental.productSerial, 
+    rental.userId, 
+    user.name, 
+    rental.lendDate, 
+    rental.returnDate
+  ) 
+FROM Rental rental LEFT JOIN User user ON rental.userId = user.id ORDER BY rental.id ASC")
+*/

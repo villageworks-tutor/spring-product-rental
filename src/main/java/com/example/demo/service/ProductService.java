@@ -29,7 +29,7 @@ public class ProductService {
 		List<String> errorList = new ArrayList<String>();
 		
 		// 管理番号の妥当性検査
-		if (product.getSerialNo() == 0) {
+		if (product.getSerialNo() == null) {
 			errorList.add("管理番号は必須です。");
 		} else if (product.getSerialNo() < 0) {
 			errorList.add("管理番号は正の整数で入力してください。");
