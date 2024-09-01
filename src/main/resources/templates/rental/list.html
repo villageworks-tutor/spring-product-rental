@@ -11,15 +11,6 @@
 				<ul th:if="${errorList}">
 					<li th:each="error : ${errorList}" th:text="${error}"></li>
 				</ul>
-				<form>
-					<div>
-						<label>製品管理番号：</label>
-						<select name="productSerial">
-							<option th:each="product : ${productList}" th:text="${product.serialNo} + '：' + ${product.imei}" th:value="${product.serialNo}"></option>
-						</select>
-						<button th:formaction="@{/rentals/entry}" formmethod="post">貸出登錄</button>
-					</div>
-				</form>
 			</th:block>
 			<th:block th:if="${rentals}">
 			<table border="0">
@@ -56,7 +47,8 @@
 					</tr>
 				</tbody>
 			</table>
-			<th:block th:if="${productSerial != null and userId == nul}">
+			</th:block>
+			<th:block th:if="${isRent}">
 				<form>
 					<div>
 						<label>製品管理番号：</label>
@@ -73,6 +65,16 @@
 					</div>
 				</form>
 			</th:block>
+			<th:block th:unless="${isRent}">
+				<form>
+					<div>
+						<label>製品管理番号：</label>
+						<select name="productSerial">
+							<option th:each="product : ${productList}" th:text="${product.serialNo} + '：' + ${product.imei}" th:value="${product.serialNo}"></option>
+						</select>
+						<button th:formaction="@{/rentals/entry}" formmethod="post">貸出登錄</button>
+					</div>
+				</form>
 			</th:block>
 		</article>
 	</main>

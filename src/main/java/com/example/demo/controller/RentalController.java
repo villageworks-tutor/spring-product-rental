@@ -70,10 +70,9 @@ public class RentalController {
 		List<RentalFormBean> list = rentalService.findAllForDisplay();
 		if (list.size() > 0) {
 			model.addAttribute("rentals", list);
-		} else {
-			List<Product> productList = productService.findAll();
-			model.addAttribute("productList", productList);
 		}
+		List<Product> productList = productService.findAll();
+		model.addAttribute("productList", productList);
 		// ページヘッダの設定
 		this.setPageHeader(model);
 		// 画面遷移
@@ -105,6 +104,7 @@ public class RentalController {
 			// 台帳IDと選択された製品管理番号をスコープに登錄
 			model.addAttribute("id", id);
 			model.addAttribute("productSerial", productSerial);
+			model.addAttribute("isRent", "");
 			// 貸出状況リストを取得
 			List<RentalFormBean> list = rentalService.findAllForDisplay();
 			model.addAttribute("rentals", list);
