@@ -65,63 +65,63 @@ botton {
   color: dimgray;
 }
 
-#product table {
+#products table {
   width: 255px;
 }
-#product .error {
+#products .error {
   color: tomato;
   list-style-type: disc;
   margin: 0;
   padding: 0;
 }
-#product .error li {
+#products .error li {
   margin: 0;
   padding: 0;
   margin-left: 20px;
 }
-#product .input {
+#products .input {
   width: -moz-fit-content;
   width: fit-content;
 }
-#product .input input::-moz-placeholder {
+#products .input input::-moz-placeholder {
   color: gainsboro;
   font-size: small;
 }
-#product .input input::placeholder {
+#products .input input::placeholder {
   color: gainsboro;
   font-size: small;
 }
-#product .input input[type=number] {
+#products .input input[type=number] {
   width: 73px;
 }
-#product .input input[type=text] {
+#products .input input[type=text] {
   width: 113px;
 }
 
-#user table td {
+#users table td {
   padding: 0 0.5rem;
   text-align: left;
 }
-#user table td td:first-child {
+#users table td td:first-child {
   text-align: center;
 }
-#user .error {
+#users .error {
   color: tomato;
   list-style-type: disc;
   margin: 0;
   padding: 0;
 }
-#user .error li {
+#users .error li {
   margin: 0;
   padding: 0;
   margin-left: 20px;
 }
-#user .input {
+#users .input {
   margin: 0.75rem 0;
 }
-#user .input::-moz-placeholder {
+#users .input::-moz-placeholder {
   color: gainsboro;
 }
-#user .input::placeholder {
+#users .input::placeholder {
   color: gainsboro;
 }/*# sourceMappingURL=style.css.map */

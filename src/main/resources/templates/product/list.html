@@ -1,20 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta charset="UTF-8">
-	<title>製品マスタ</title>
-	<link rel="stylesheet" th:href="@{/css/style.css}">
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 <body>
-	<header>
-		<h1>製品貸出管理アプリ</h1>
-		<ol>
-			<li><a th:href="@{/rentals}">貸出状況一覧</a></li>
-			<li><a th:href="@{/user/list}">利用者管理</a></li>
-		</ol>
-	</header>
-	<main id="product">
+	<main id="products" layout:fragment="content">
 		<article>
+			<h2>製品管理</h2>
 			<th:block th:if="${errorList}">
 			<ul class="error">
 				<li th:each="error : ${errorList}" th:text="${error}"></li>
@@ -22,7 +13,6 @@
 			</th:block>
 			<th:block th:if="${products}">
 				<table>
-					<caption>製品マスタ</caption>
 					<thead>
 						<tr>
 							<th>管理番号</th>
@@ -40,16 +30,13 @@
 			<form class="form" action="/product/add" method="post">
 				<div class="input">
 					<input type="number" name="serialNo" placeholder="管理番号"
-					       th:value="${product != null ? product.serialNo : ''}" />
+									th:value="${product != null ? product.serialNo : ''}" />
 					<input type="text" name="imei" placeholder="IMEI" maxlength="15"
-					       th:value="${product != null ? product.imei : ''}" />
+									th:value="${product != null ? product.imei : ''}" />
 					<button>登録</button>
 				</div>
 			</form>
 		</article>
 	</main>
-	<footer>
-		<div id="copyright">&copy; 2024 Crab Bean Band.</div>
-	</footer>
 </body>
 </html>

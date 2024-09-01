@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.entity.Product;
 
 @Repository
-public interface ProducctRepository extends JpaRepository<Product, Integer> {
+public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 	/**
 	 * すべての製品の情報を製品管理番号の照準に取得する
@@ -32,5 +32,5 @@ public interface ProducctRepository extends JpaRepository<Product, Integer> {
 	 * @return 製品インスタンス
 	 */
 	Product findByImei(String imei);
-
+	
 }

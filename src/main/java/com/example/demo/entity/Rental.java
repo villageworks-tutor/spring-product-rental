@@ -53,6 +53,14 @@ public class Rental {
 		this.returnDate = returnDate;
 		this.userName = userName;
 	}
+
+	/**
+	 * コンストラクタ
+	 * @param productSerial 製品管理番号
+	 */
+	public Rental(Integer productSerial) {
+		this.productSerial = productSerial;
+	}
 	
 	
 }

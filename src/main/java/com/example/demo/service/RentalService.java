@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class RentalService {
 	
 	@Autowired
 	RentalRepository rentalRepository;
-
+	
 	/**
 	 * 貸出台帳の貸出情報を変更する
 	 * @param rental 変更対象の貸出インスタンス
@@ -52,6 +53,20 @@ public class RentalService {
 				bean.setAvailable(false);
 			}
 		}
+	}
+
+	public List<String> invalidate(Rental rental) {
+		List<String> list = new ArrayList<String>();
+		if (rental.getProductSerial() == null) {
+			list.add("製品管理番号は必須です。");
+		} else if (rental.getProductSerial() < 1) {
+			list.add("製品管理番号は正の整数です。");
+		}
+		return list;
+	}
+
+	public void save(Rental rental) {
+		rentalRepository.save(rental);
 	}
 
 }

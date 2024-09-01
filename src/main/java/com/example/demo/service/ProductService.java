@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Product;
-import com.example.demo.repository.ProducctRepository;
+import com.example.demo.repository.ProductRepository;
 
 @Service
 public class ProductService {
 	
 	@Autowired
-	ProducctRepository productRepository;
+	ProductRepository productRepository;
 
 	/**
 	 * 製品マスタ入力値の妥当性検査
@@ -66,6 +66,11 @@ public class ProductService {
 	public List<Product> findAll() {
 		List<Product> list = productRepository.findAllByOrderByIdAsc();
 		return list;
+	}
+
+	public Product findBySerialNo(Integer serialNo) {
+		Product product = productRepository.findBySerialNo(serialNo);
+		return product;
 	}
 
 }

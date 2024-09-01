@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.controller.formbean.LinkFormBean;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.Rental;
 import com.example.demo.service.ProductService;
@@ -49,6 +51,7 @@ public class ProductController {
 			List<Product> productList = productService.findAll();
 			model.addAttribute("products", productList);
 			model.addAttribute("product", product);
+			this.setPageHeader(model);
 			return "product/list";
 		}
 		
@@ -74,6 +77,19 @@ public class ProductController {
 		List<Product> productList = productService.findAll();
 		model.addAttribute("products", productList);
 		model.addAttribute("product", new Product());
+		this.setPageHeader(model);
 		return "product/list";
 	}
+	
+	/**
+	 * 製品貸出状況一覧画面用のページヘッダを設定する
+	 * @param model スコープ
+	 */
+	private void setPageHeader(Model model) {
+		List<LinkFormBean> linkList = new ArrayList<LinkFormBean>();
+		linkList.add(new LinkFormBean("/rentals", "貸出状況一覧"));
+		linkList.add(new LinkFormBean("/user/list", "利用者管理"));
+		model.addAttribute("linkList", linkList);
+	}
+	
 }

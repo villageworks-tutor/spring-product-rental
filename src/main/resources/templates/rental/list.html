@@ -1,22 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta charset="UTF-8">
-	<title>製品貸出管理アプリ</title>
-	<link rel="stylesheet" th:href="@{/css/style.css}">
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 <body>
-	<header>
-		<h1>製品貸出管理アプリ</h1>
-		<ol>
-			<th:block th:each="link : ${linkList}">
-				<li><a th:href="${link.href}" th:text="${link.text}"></a></li>
-			</th:block> 
-		</ol>
-	</header>
-	<main>
+	<main id="rentals" layout:fragment="content">
 		<article>
 			<h2>製品貸出状況一覧</h2>
+			<th:block th:unless="${rentals}">
+				<p>貸出可能な製品はありません。貸出可能な製品を登録してください。</p>
+				<ul th:if="${errorList}">
+					<li th:each="error : ${errorList}" th:text="${error}"></li>
+				</ul>
+				<form>
+					<div>
+						<label>製品管理番号：</label>
+						<select name="productSerial">
+							<option th:each="product : ${productList}" th:text="${product.serialNo} + '：' + ${product.imei}" th:value="${product.serialNo}"></option>
+						</select>
+						<button th:formaction="@{/rentals/entry}" formmethod="post">貸出登錄</button>
+					</div>
+				</form>
+			</th:block>
+			<th:block th:if="${rentals}">
 			<table border="0">
 				<thead>
 					<tr>
@@ -68,10 +73,8 @@
 					</div>
 				</form>
 			</th:block>
+			</th:block>
 		</article>
 	</main>
-	<footer>
-		<div id="copyright">&copy; 2024 Super Crab Bean Band.</div>
-	</footer>
 </body>
 </html>
