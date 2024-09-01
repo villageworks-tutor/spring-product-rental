@@ -16,14 +16,10 @@ public class ProductService {
 	ProducctRepository productRepository;
 
 	/**
-	 * すべての製品を製品IDの昇順に並べ替えて取得する
-	 * @return 製品IDの昇順に並べ替えられた製品リスト
+	 * 製品マスタ入力値の妥当性検査
+	 * @param product 入力値が設定された製品インスタンス
+	 * @return エラーリスト
 	 */
-	public List<Product> findAll() {
-		List<Product> list = productRepository.findAllByOrderByIdAsc();
-		return list;
-	}
-
 	public List<String> validate(Product product) {
 		// エラーリストの初期化
 		List<String> errorList = new ArrayList<String>();
@@ -55,8 +51,21 @@ public class ProductService {
 		return errorList;
 	}
 
+	/**
+	 * 製品マスタ登錄処理
+	 * @param product 処理対象製品インスタンス
+	 */
 	public void store(Product product) {
 		productRepository.save(product);
+	}
+	
+	/**
+	 * すべての製品を製品IDの昇順に並べ替えて取得する
+	 * @return 製品IDの昇順に並べ替えられた製品リスト
+	 */
+	public List<Product> findAll() {
+		List<Product> list = productRepository.findAllByOrderByIdAsc();
+		return list;
 	}
 
 }

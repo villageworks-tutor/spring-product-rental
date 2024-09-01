@@ -9,14 +9,15 @@
 	<header>
 		<h1>製品貸出管理アプリ</h1>
 		<ol>
-			<li><a th:href="@{/product/list}">製品マスタ</a></li>
-			<li><a th:href="@{/user/list}">利用者管理</a></li>
+			<th:block th:each="link : ${linkList}">
+				<li><a th:href="${link.href}" th:text="${link.text}"></a></li>
+			</th:block> 
 		</ol>
 	</header>
 	<main>
 		<article>
+			<h2>製品貸出状況一覧</h2>
 			<table border="0">
-				<caption>製品貸出状況一覧</caption>
 				<thead>
 					<tr>
 						<th>貸出番号</th>
@@ -70,7 +71,7 @@
 		</article>
 	</main>
 	<footer>
-		<div id="copyright">&copy; 2024 Crab Bean Band.</div>
+		<div id="copyright">&copy; 2024 Super Crab Bean Band.</div>
 	</footer>
 </body>
 </html>

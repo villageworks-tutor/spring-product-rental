@@ -15,7 +15,12 @@ public class UserService {
 	
 	@Autowired
 	UserRepository userRepository;
-
+	
+	/**
+	 * 離床者マスタ入力値の妥当性検査
+	 * @param product 入力値が設定された利用者インスタンス
+	 * @return エラーリスト
+	 */
 	public List<String> validate(User user) {
 		List<String> errorList = new ArrayList<String>();
 		if (user.getName() == null || user.getName().isEmpty()) {
@@ -30,20 +35,21 @@ public class UserService {
 	}
 	
 	/**
-	 * 利用者をすべて取得する
-	 * @return 利用者IDの昇順で並べ替えられた利用者リスト
+	 * 利用者削除処理
+	 * @param id 削除対象利用者の利用者ID
 	 */
-	public List<User> findAll() {
-		return userRepository.findAllByOrderById();
+	public void delete(int id) {
+		userRepository.deleteById(id);
 	}
 
 	/**
-	 * 利用者を登録する
+	 * 利用者登録処理
 	 * @param user 利用者インスタンス
 	 */
 	public void store(User user) {
 		userRepository.save(user);
 	}
+	
 	/**
 	 * 指定された利用者IDの利用者を取得する
 	 * @param id 利用者ID
@@ -58,11 +64,11 @@ public class UserService {
 	}
 
 	/**
-	 * 指定された利用者IDの利用者を削除する
-	 * @param id 削除対象利用者の利用者ID
+	 * 利用者をすべて取得する
+	 * @return 利用者IDの昇順で並べ替えられた利用者リスト
 	 */
-	public void delete(int id) {
-		userRepository.deleteById(id);
+	public List<User> findAll() {
+		return userRepository.findAllByOrderById();
 	}
 
 }

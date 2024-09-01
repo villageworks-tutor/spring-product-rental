@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.controller.formbean.LinkFormBean;
 import com.example.demo.controller.formbean.RentalFormBean;
 import com.example.demo.entity.Rental;
 import com.example.demo.entity.User;
@@ -36,7 +38,13 @@ public class RentalController {
 	public String showLoanList(Model model) {
 		List<RentalFormBean> list = rentalService.findAllForDisplay();
 		model.addAttribute("rentals", list);
-		return "rental/list";
+		// ページヘッダの設定
+		List<LinkFormBean> linkList = new ArrayList<LinkFormBean>();
+		linkList.add(new LinkFormBean("/product/list", "製品管理"));
+		linkList.add(new LinkFormBean("/user/list", "利用者管理"));
+		model.addAttribute("linkList", linkList);
+//		return "rental/list";
+		return "index";
 	}
 	
 	/**

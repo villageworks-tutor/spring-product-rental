@@ -22,6 +22,11 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
+	/**
+	 * 利用者削除処理
+	 * @param id 削除対象の利用者の利用者ID
+	 * @return 遷移先Thyleafテンプレート名：/user/listにリダイレクト
+	 */
 	@GetMapping("/{id}/delete")
 	public String delete(@PathVariable(name = "id") int id) {
 		// 削除処理の実行
@@ -30,6 +35,14 @@ public class UserController {
 		return "redirect:/user/list";
 	}
 	
+	/**
+	 * 利用者更新画面表示
+	 * @param name 利用者名
+	 * @param phone 連絡先電話番号
+	 * @param email 連絡先メールアドレス
+	 * @param model スコープ
+	 * @return 遷移先のThymeleafテンプレート名
+	 */
 	@PostMapping("/{id}/edit")
 	public String update(
 				@PathVariable(name = "id") Integer id,
