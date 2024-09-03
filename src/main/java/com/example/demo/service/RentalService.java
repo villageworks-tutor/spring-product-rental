@@ -75,8 +75,6 @@ public class RentalService {
 			list.add("製品管理番号は必須です。");
 		} else if (rental.getProductSerial() < 1) {
 			list.add("製品管理番号は正の整数です。");
-		} else if (this.isExisted(rental)) {
-			list.add("製品管理番号はすでに貸出登録されています。");
 		}
 		return list;
 	}

@@ -68,7 +68,7 @@
 			<th:block th:unless="${isRent}">
 				<form>
 					<div>
-						<label>製品管理番号：</label>
+						<label>貸出番号：</label>
 						<select name="productSerial">
 							<option th:each="product : ${productList}" th:text="${product.serialNo} + '：' + ${product.imei}" th:value="${product.serialNo}"></option>
 						</select>

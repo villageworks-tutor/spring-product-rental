@@ -77,6 +77,8 @@ public class RentalController {
 		List<RentalFormBean> list = rentalService.findAllForDisplay();
 		if (list.size() > 0) {
 			model.addAttribute("rentals", list);
+		} else {
+			model.addAttribute("noRent", "");
 		}
 		List<Product> productList = productService.findAll();
 		model.addAttribute("productList", productList);
