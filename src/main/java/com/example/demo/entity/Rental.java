@@ -24,11 +24,11 @@ public class Rental {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;               // 台帳ID
+	private Integer id;               // 台帳ID
 	@Column(name = "product_serial")
-	private int productSerial;    // 製品管理番号
+	private Integer productSerial;    // 製品管理番号
 	@Column(name = "user_id")
-	private int userId;           // 利用者ID
+	private Integer userId;           // 利用者ID
 	@Column(name = "lend_date")
 	private LocalDate lendDate;   // 貸出日
 	@Column(name = "return_date")
@@ -45,13 +45,21 @@ public class Rental {
 	 * @param returnDate    減却日
 	 * @param userName      利用者名（表示用）
 	 */
-	public Rental(int id, int productSerial, int userId, LocalDate lendDate, LocalDate returnDate, String userName) {
+	public Rental(Integer id, Integer productSerial, Integer userId, LocalDate lendDate, LocalDate returnDate, String userName) {
 		this.id = id;
 		this.productSerial = productSerial;
 		this.userId = userId;
 		this.lendDate = lendDate;
 		this.returnDate = returnDate;
 		this.userName = userName;
+	}
+
+	/**
+	 * コンストラクタ
+	 * @param productSerial 製品管理番号
+	 */
+	public Rental(Integer productSerial) {
+		this.productSerial = productSerial;
 	}
 	
 	

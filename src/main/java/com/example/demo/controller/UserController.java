@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.controller.formbean.LinkFormBean;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 
@@ -22,6 +24,11 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
+	/**
+	 * 利用者削除処理
+	 * @param id 削除対象の利用者の利用者ID
+	 * @return 遷移先Thyleafテンプレート名：/user/listにリダイレクト
+	 */
 	@GetMapping("/{id}/delete")
 	public String delete(@PathVariable(name = "id") int id) {
 		// 削除処理の実行
@@ -30,9 +37,17 @@ public class UserController {
 		return "redirect:/user/list";
 	}
 	
+	/**
+	 * 利用者更新画面表示
+	 * @param name 利用者名
+	 * @param phone 連絡先電話番号
+	 * @param email 連絡先メールアドレス
+	 * @param model スコープ
+	 * @return 遷移先のThymeleafテンプレート名
+	 */
 	@PostMapping("/{id}/edit")
 	public String update(
-				@PathVariable(name = "id") int id,
+				@PathVariable(name = "id") Integer id,
 				@RequestParam(name = "name", defaultValue = "") String name,
 				@RequestParam(name = "phone", defaultValue = "") String phone,
 				@RequestParam(name = "email", defaultValue = "") String email,
@@ -47,6 +62,7 @@ public class UserController {
 			model.addAttribute("errorList", errorList);
 			model.addAttribute("user", user);
 			model.addAttribute("users", userService.findAll());
+			this.setPageHeader(model);
 			return "user/list";
 		}
 		// 更新処理の実行
@@ -70,6 +86,7 @@ public class UserController {
 		model.addAttribute("users", userService.findAll());
 		// ボタントップの表示文字列を登録
 		model.addAttribute("buttonText", "更新");
+		this.setPageHeader(model);
 		// 画面遷移
 		return "user/list";
 	}
@@ -99,6 +116,7 @@ public class UserController {
 			model.addAttribute("errorList", errorList);
 			model.addAttribute("users", userService.findAll());
 			model.addAttribute("user", user);
+			this.setPageHeader(model);
 			return "user/list";
 		}
 		
@@ -117,7 +135,19 @@ public class UserController {
 		List<User> list = userService.findAll();
 		model.addAttribute("users", list);
 		model.addAttribute("user",new User());
+		this.setPageHeader(model);
 		return "user/list";
+	}
+	
+	/**
+	 * 利用者管理画面用のページヘッダを設定する
+	 * @param model スコープ
+	 */
+	private void setPageHeader(Model model) {
+		List<LinkFormBean> linkList = new ArrayList<LinkFormBean>();
+		linkList.add(new LinkFormBean("/rentals", "貸出状況一覧"));
+		linkList.add(new LinkFormBean("/product/list", "製品管理"));
+		model.addAttribute("linkList", linkList);
 	}
 	
 }

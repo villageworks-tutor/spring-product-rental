@@ -1,22 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta charset="UTF-8">
-	<title>製品貸出管理アプリ</title>
-	<link rel="stylesheet" th:href="@{/css/style.css}">
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 <body>
-	<header>
-		<h1>製品貸出管理アプリ</h1>
-		<ol>
-			<li><a th:href="@{/product/list}">製品マスタ</a></li>
-			<li><a th:href="@{/user/list}">利用者管理</a></li>
-		</ol>
-	</header>
-	<main>
+	<main id="rentals" layout:fragment="content">
 		<article>
+			<h2>製品貸出状況一覧</h2>
+			<th:block th:unless="${rentals}">
+				<p>貸出可能な製品はありません。貸出可能な製品を登録してください。</p>
+				<ul th:if="${errorList}">
+					<li th:each="error : ${errorList}" th:text="${error}"></li>
+				</ul>
+			</th:block>
+			<th:block th:if="${rentals}">
 			<table border="0">
-				<caption>製品貸出状況一覧</caption>
 				<thead>
 					<tr>
 						<th>貸出番号</th>
@@ -35,7 +32,7 @@
 								<input type="hidden" name="id" th:value="${rental.id}" />
 								<input type="hidden" name="productSerial" th:value="${rental.productSerial}" />
 								<input type="hidden" name="userId" th:value="${rental.userId}" />
-								<button type="submit" th:disabled="${!rental.available}">Rent</button>
+								<button type="submit" th:disabled="${!rental.available}">貸出</button>
 							</form>
 						</td>
 						<td>
@@ -44,16 +41,42 @@
 								<input type="hidden" name="productSerial" th:value="${rental.productSerial}" />
 								<input type="hidden" name="userId" th:value="${rental.userId}" />
 								<input type="hidden" name="lendDate" th:value="${rental.lendDate}" />
-								<button type="submit" th:disabled="${rental.available}">Return</button>
+								<button type="submit" th:disabled="${rental.available}">返却</button>
 							</form>
 						</td>
 					</tr>
 				</tbody>
 			</table>
+			</th:block>
+			<th:block th:if="${isRent}">
+				<form>
+					<div>
+						<label>製品管理番号：</label>
+						<span th:text="${productSerial}"></span>
+					</div>
+					<div>
+						<lable>利用者：</lable>
+						<select name="userId">
+							<option th:each="user : ${userList}" th:text="${user.name}" th:value="${user.id}"></option>
+						</select>
+						<input type="hidden" name="id" th:value="${id}" />
+						<input type="hidden" name="productSerial" th:value="${productSerial}" />
+						<button th:formaction="@{/rentals/rent}" formmethod="post">貸出</button>
+					</div>
+				</form>
+			</th:block>
+			<th:block th:unless="${isRent}">
+				<form>
+					<div>
+						<label>貸出番号：</label>
+						<select name="productSerial">
+							<option th:each="product : ${productList}" th:text="${product.serialNo} + '：' + ${product.imei}" th:value="${product.serialNo}"></option>
+						</select>
+						<button th:formaction="@{/rentals/entry}" formmethod="post">貸出登錄</button>
+					</div>
+				</form>
+			</th:block>
 		</article>
 	</main>
-	<footer>
-		<div id="copyright">&copy; 2024 Crab Bean Band.</div>
-	</footer>
 </body>
 </html>

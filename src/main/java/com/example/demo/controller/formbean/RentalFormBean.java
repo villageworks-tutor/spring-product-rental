@@ -14,13 +14,13 @@ public class RentalFormBean {
 	/**
 	 * フィールド
 	 */
-	private int id;               // 台帳ID
-	private int productSerial;    // 製品管理番号
-	private int userId;           // 利用者ID
-	private String userName;      // 利用者名
-	private LocalDate lendDate;   // 貸出日
-	private LocalDate returnDate; // 返却日
-	private boolean available;    // 貸出状況ステータス
+	private Integer id;            // 台帳ID
+	private Integer productSerial; // 製品管理番号
+	private Integer userId;        // 利用者ID
+	private String userName;       // 利用者名
+	private LocalDate lendDate;    // 貸出日
+	private LocalDate returnDate;  // 返却日
+	private boolean available;     // 貸出状況ステータス
 	
 	/**
 	 * コンストラクタ
@@ -32,9 +32,9 @@ public class RentalFormBean {
 	 * @param returnDate    返却日
 	 */
 	public RentalFormBean(
-			int id, 
-			int productSerial, 
-			int userId, 
+			Integer id, 
+			Integer productSerial, 
+			Integer userId, 
 			String userName, 
 			LocalDate lendDate,
 			LocalDate returnDate

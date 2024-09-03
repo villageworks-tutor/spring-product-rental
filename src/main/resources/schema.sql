@@ -27,7 +27,7 @@ CREATE TABLE products(
 CREATE TABLE rentals(
 	id SERIAL,
 	product_serial INTEGER NOT NULL,
-	user_id INTEGER NOT NULL,
+	user_id INTEGER NULL,
 	lend_date DATE,
 	return_date DATE
 );
