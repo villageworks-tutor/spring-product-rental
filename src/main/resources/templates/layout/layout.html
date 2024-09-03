@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta charset="UTF-8">
+	<title>製品貸出管理アプリ</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+  <th:block layout:fragment="header">
+	<header>
+		<h1>製品貸出管理アプリ</h1>
+		<ol>
+			<th:block th:each="link : ${linkList}">
+				<li><a th:href="${link.href}" th:text="${link.text}"></a></li>
+			</th:block> 
+		</ol>
+	</header>
+  </th:block>
+	
+	<th:block layout:fragment="content">ここが各HTMLファイルのmain要素と置換される</th:block>		
+  
+  <th:block layout:fragment="footer">
+  <footer>
+		<div id="copyright">&copy; 2024 Super Crab Bean Band.</div>
+	</footer>
+  </th:block>
+</body>
+</html>

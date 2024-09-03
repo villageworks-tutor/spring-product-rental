@@ -20,7 +20,7 @@ public class User {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;       // 利用者ID
+	private Integer id;       // 利用者ID
 	private String name;  // 利用者名
 	private String phone; // 連絡先電話番号
 	private String email; // 連絡先メールアドレス

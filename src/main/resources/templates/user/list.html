@@ -1,55 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta charset="UTF-8">
-	<title>利用者スタ</title>
-	<link rel="stylesheet" th:href="@{/css/style.css}">
-	<style>
-		#user table td {
-			padding: 0 0.5rem;
-			text-align: left;
-		}
-		#user table td:first-child {
-			text-align: center;
-		}
-		.error {
-			color: tomato;
-			list-style-type: disc;
-			margin: 0;
-			padding: 0;
-		}
-		.error li {
-			margin: 0;
-			padding: 0;
-			margin-left: 20px;
-		}
-		.input {
-			margin: 0.75rem 0;
-		}
-
-		.input input::placeholder {
-			color: gainsboro;
-		}
-	</style>
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 <body>
-	<header>
-		<h1>製品貸出管理アプリ</h1>
-		<ol>
-			<li><a th:href="@{/rentals}">貸出状況一覧</a></li>
-			<li><a th:href="@{/product/list}">製品マスタ</a></li>
-		</ol>
-	</header>
-
-	<main id="user">
+	<main id="users" layout:fragment="content">
 		<article>
+			<h2>利用者管理</h2>
 			<th:block th:if="${errorList}">
 			<ul class="error">
 				<li th:each="error : ${errorList}" th:text="${error}"></li>
 			</ul>
 			</th:block>
 			<table>
-				<caption>利用者管理</caption>
 				<thead>
 					<tr>
 						<th>利用者ID</th>
@@ -96,9 +58,5 @@
 			</form>
 		</article>
 	</main>
-
-	<footer>
-		<div id="copyright">&copy; 2024 Crab Bean Band.</div>
-	</footer>
 </body>
 </html>
