@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -23,7 +24,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	 * @param serialNo 管理番号
 	 * @return 製品インスタンス
 	 */
-	Product findBySerialNo(int serialNo);
+	Optional<Product> findBySerialNo(int serialNo);
 
 	/**
 	 * 指定されたIMEIコードの製品を取得する
@@ -31,6 +32,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	 * @param imei
 	 * @return 製品インスタンス
 	 */
-	Product findByImei(String imei);
+	Optional<Product> findByImei(String imei);
 	
 }

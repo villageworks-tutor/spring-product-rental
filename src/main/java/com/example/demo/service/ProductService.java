@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,8 @@ import com.example.demo.repository.ProductRepository;
 
 @Service
 public class ProductService {
+	
+	private static final Integer IMEI_LENGTH = 15;
 	
 	@Autowired
 	ProductRepository productRepository;
@@ -25,25 +28,26 @@ public class ProductService {
 		List<String> errorList = new ArrayList<String>();
 		
 		// 管理番号の妥当性検査
-		if (product.getSerialNo() == null) {
-			errorList.add("管理番号は必須です。");
-		} else if (product.getSerialNo() < 0) {
-			errorList.add("管理番号は正の整数で入力してください。");
+		if (!Validator.isRequired(product.getSerialNo())) {
+			Validator.createErrorMessage(errorList, "管理番号", Validator.ERR_TYPE_REQUIRED);
+		} else if (!Validator.isPositiveNumber(product.getSerialNo())) {
+			Validator.createErrorMessage(errorList, "", Validator.ERR_TYPE_POSITIVE_NUMBER);
 		} else {
-			Product existedProduct = productRepository.findBySerialNo(product.getSerialNo());
-			if (existedProduct != null) {
-				errorList.add("管理番号はすでに登録されています。");
+			Optional<Product> optionalProduct = productRepository.findBySerialNo(product.getSerialNo());
+			if (optionalProduct.isPresent()) {
+				Validator.createErrorMessage(errorList, "管理番号", Validator.ERR_TYPE_ALREADY_REGISTED);
 			}
 		}
 		// IMEIコードの妥当性検査
-		if (product.getImei() == null || product.getImei().isEmpty()) {
-			errorList.add("IMEIは必須です。");
-		} else if (product.getImei().length() != 15) {
-			errorList.add("IMEIは15文字固定で入力してください。");
+		if (!Validator.isRequired(product.getImei())) {
+			Validator.createErrorMessage(errorList, "IMEI", Validator.ERR_TYPE_REQUIRED);
+		} else if (!Validator.hasLength(product.getImei(), IMEI_LENGTH)) {
+			Validator.createErrorMessage(errorList, "IMEI", IMEI_LENGTH, Validator.ERR_TYPE_LENGTH);
 		} else {
-			Product existedProduct = productRepository.findByImei(product.getImei());
-			if (existedProduct != null) {
-				errorList.add("IMEIコードはすでに登録されています。");
+			Optional<Product> optionalProduct = productRepository.findByImei(product.getImei());
+			// すでにIMEIコードの製品が登録されている場合
+			if (optionalProduct.isPresent()) {
+				Validator.createErrorMessage(errorList, "IMEIコードの製品", Validator.ERR_TYPE_ALREADY_REGISTED);
 			}
 		}
 		
@@ -68,8 +72,13 @@ public class ProductService {
 		return list;
 	}
 
+	/**
+	 * 指定された製品管理番号の製品を取得する
+	 * @param serialNo 製品管理番号
+	 * @return 指定された製品管理番号に合致した製品インスタンス、合致したものがない場合はnull
+	 */
 	public Product findBySerialNo(Integer serialNo) {
-		Product product = productRepository.findBySerialNo(serialNo);
+		Product product = productRepository.findBySerialNo(serialNo).get();
 		return product;
 	}
 

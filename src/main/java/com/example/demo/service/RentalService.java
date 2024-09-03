@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,14 @@ public class RentalService {
 	@Autowired
 	RentalRepository rentalRepository;
 	
+	/**
+	 * 貸出インスタンスを登録する
+	 * @param rental 貸出インスタンス
+	 */
+	public void add(Rental rental) {
+		rentalRepository.save(rental);
+	}
+
 	/**
 	 * 貸出台帳の貸出情報を変更する
 	 * @param rental 変更対象の貸出インスタンス
@@ -55,18 +64,31 @@ public class RentalService {
 		}
 	}
 
+	/**
+	 * 製品貸出入力値の妥当性検査
+	 * @param rental 入力値が設定された貸出インスタンス
+	 * @return エラーリスト
+	 */
 	public List<String> invalidate(Rental rental) {
 		List<String> list = new ArrayList<String>();
 		if (rental.getProductSerial() == null) {
 			list.add("製品管理番号は必須です。");
 		} else if (rental.getProductSerial() < 1) {
 			list.add("製品管理番号は正の整数です。");
+		} else if (this.isExisted(rental)) {
+			list.add("製品管理番号はすでに貸出登録されています。");
 		}
 		return list;
 	}
 
-	public void save(Rental rental) {
-		rentalRepository.save(rental);
+	/**
+	 * 指定された貸出インスタンスが登録されているかどうかをチェックする
+	 * @param rental 貸出インスタンス
+	 * @return 登録されている場合はtrue、それ以外はfalse
+	 */
+	private boolean isExisted(Rental rental) {
+		Optional<Rental> optionalRental = rentalRepository.findByProductSerial(rental.getProductSerial());
+		return optionalRental.isPresent();
 	}
-
+	
 }

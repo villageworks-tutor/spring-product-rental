@@ -34,6 +34,13 @@ public class RentalController {
 	@Autowired
 	private ProductService productService;
 	
+	/**
+	 * 製品貸出登錄処理
+	 * @param serialNo 製品管理番号
+	 * @param model    スコープ
+	 * @return 遷移先Thymeleafテンプレート名
+	 *         エラーがない場合は/rentalsにリダイレクト、それ以外は自画面遷移
+	 */
 	@PostMapping("/entry")
 	public String add(
 			@RequestParam(name = "productSerial", defaultValue = "") Integer serialNo,
@@ -43,7 +50,7 @@ public class RentalController {
 		
 		// 入力値チェック
 		List<String> errorList = rentalService.invalidate(rental);
-		// 製品管理番号存在チェック
+		// 製品管理番号登錄チェック
 		Product product = productService.findBySerialNo(serialNo);
 		// 存在しなかった場合
 		if (product == null) {
@@ -55,7 +62,7 @@ public class RentalController {
 			this.setPageHeader(model);
 			return "rental/list";
 		}
-		rentalService.save(rental);
+		rentalService.add(rental);
 		// 画面遷移
 		return "redirect:/rentals";
 	}

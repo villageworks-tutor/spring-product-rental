@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -33,5 +34,7 @@ public interface RentalRepository extends JpaRepository<Rental, Integer> {
 			+ "	(rental.lendDate IS NULL) OR (rental.returnDate IS NULL)"
 			+ "ORDER BY rental.id ASC")
 	List<RentalFormBean> findAllWithUserNameOrderByIdAsc();
+
+	Optional<Rental> findByProductSerial(Integer serialNo);
 
 }
